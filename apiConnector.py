@@ -5,7 +5,7 @@ base_url = 'http://dummyapi.io/data/v1/'
 users_url = f"{base_url}/user"
 users_profile_url = f"{base_url}/user/{{}}"
 
-headers = {'app-id': '6401c57240b15c493ba72bea'}
+headers = {'app-id': '##################'}
 
 # Params
 params = {'limit': 30}
