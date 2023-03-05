@@ -1,0 +1,289 @@
+{
+	"info": {
+		"_postman_id": "df1727c0-41bb-43b5-9961-8a75ad6f3a1a",
+		"name": "DummyApi.io collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24942959"
+	},
+	"item": [
+		{
+			"name": "Get list of users",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Extract user IDs from the user list response\r",
+							"let user_list = pm.variables.get(\"user_list\");\r",
+							"let users = user_list.data;\r",
+							"let user_ids = [];\r",
+							"\r",
+							"for (let i = 0; i < users.length; i++) {\r",
+							"    user_ids.push(users[i].id);\r",
+							"}\r",
+							"\r",
+							"// Store the user IDs in an environment variable\r",
+							"pm.environment.set(\"user_ids\", JSON.stringify(user_ids));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "app-id",
+						"value": "6401c57240b15c493ba72bea",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://dummyapi.io/data/v1/user?limit=20&page=0",
+					"protocol": "https",
+					"host": [
+						"dummyapi",
+						"io"
+					],
+					"path": [
+						"data",
+						"v1",
+						"user"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "20"
+						},
+						{
+							"key": "page",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get specific user profile",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"    url: \"https://dummyapi.io/data/v1/user?limit=20&page=0\",\r",
+							"    method: \"GET\",\r",
+							"    header: {\r",
+							"        \"app-id\": \"6401c57240b15c493ba72bea\"\r",
+							"    }\r",
+							"}, function (err, response) {\r",
+							"    if (err) {\r",
+							"        console.log(err);\r",
+							"    } else {\r",
+							"        var users = response.json().data;\r",
+							"        var random_index = Math.floor(Math.random() * users.length);\r",
+							"        var random_user = users[random_index];\r",
+							"        console.log(random_user);\r",
+							"        console.log(random_user.id);\r",
+							"        pm.variables.set(\"id\", random_user.id);\r",
+							"        }\r",
+							"        pm.environment.set(\"variable_key\", \"variable_value\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "app-id",
+						"value": "6401c57240b15c493ba72bea",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://dummyapi.io/data/v1/user/:id={{id}}",
+					"protocol": "https",
+					"host": [
+						"dummyapi",
+						"io"
+					],
+					"path": [
+						"data",
+						"v1",
+						"user",
+						":id={{id}}"
+					],
+					"variable": [
+						{
+							"key": "id={{id}}",
+							"value": "60d0fe4f5311236168a109d8"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get random user profile",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"    url: \"https://dummyapi.io/data/v1/user?limit=20&page=0\",\r",
+							"    method: \"GET\",\r",
+							"    header: {\r",
+							"        \"app-id\": \"6401c57240b15c493ba72bea\"\r",
+							"    }\r",
+							"}, function (err, response) {\r",
+							"    if (err) {\r",
+							"        console.log(err);\r",
+							"    } else {\r",
+							"        var users = response.json().data;\r",
+							"        var random_index = Math.floor(Math.random() * users.length);\r",
+							"        var random_user = users[random_index];\r",
+							"        console.log(random_user);\r",
+							"        console.log(random_user.id);\r",
+							"        pm.variables.set(\"id\", random_user.id);\r",
+							"        }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "app-id",
+						"value": "6401c57240b15c493ba72bea",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://dummyapi.io/data/v1/user/{{id}}",
+					"protocol": "https",
+					"host": [
+						"dummyapi",
+						"io"
+					],
+					"path": [
+						"data",
+						"v1",
+						"user",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get posts by user",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "app-id",
+						"value": "6401c57240b15c493ba72bea",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://dummyapi.io/data/v1/user/:id/post",
+					"protocol": "https",
+					"host": [
+						"dummyapi",
+						"io"
+					],
+					"path": [
+						"data",
+						"v1",
+						"user",
+						":id",
+						"post"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "60d0fe4f5311236168a109ca"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get post by random user",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"    url: \"https://dummyapi.io/data/v1/user?limit=20&page=0\",\r",
+							"    method: \"GET\",\r",
+							"    header: {\r",
+							"        \"app-id\": \"6401c57240b15c493ba72bea\"\r",
+							"    }\r",
+							"}, function (err, response) {\r",
+							"    if (err) {\r",
+							"        console.log(err);\r",
+							"    } else {\r",
+							"        var users = response.json().data;\r",
+							"        var random_index = Math.floor(Math.random() * users.length);\r",
+							"        var random_user = users[random_index];\r",
+							"        console.log(random_user);\r",
+							"        console.log(random_user.id);\r",
+							"        pm.variables.set(\"id\", random_user.id);\r",
+							"        }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "app-id",
+						"value": "6401c57240b15c493ba72bea",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://dummyapi.io/data/v1/user/{{id}}/post",
+					"protocol": "https",
+					"host": [
+						"dummyapi",
+						"io"
+					],
+					"path": [
+						"data",
+						"v1",
+						"user",
+						"{{id}}",
+						"post"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "id"
+		}
+	]
+}
