@@ -44,7 +44,8 @@ mysql -h 127.0.0.1 -P 3306 -u root -p
 - Execute the `000_CreateDB.sql` script in MySQL Shell to create the database and tables
 
 ```mysql-shell
-\sql > source (repository_location)/sql_scripts/000_CreateDB.sql
+\sql
+source (repository_location)/sql_scripts/000_CreateDB.sql
 ```
 
 ---
