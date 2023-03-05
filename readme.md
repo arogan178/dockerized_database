@@ -1,5 +1,9 @@
 # Rest API for DummyAPI.io
 
+- This repository contains scripts to access and manipulate user data from the DummyAPI.io.
+- The API data is retrieved and stored in a MySQL database using Python scripts.
+- The repository includes a Docker Compose file for containerization and easy deployment.
+
 ## Pre-requisites
 
 - Docker
