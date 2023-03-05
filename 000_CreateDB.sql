@@ -1,13 +1,11 @@
 CREATE DATABASE users;
-
 USE users;
-
-CREATE TABLE user_info(
-    id INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS user_info (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL,
-    dob DATE NOT NULL,
-    gender ENUM('male', 'female') NOT NULL,
+    dob DATETIME NOT NULL,
+    gender VARCHAR(255) NOT NULL,
     name_character_count INT NOT NULL,
-    PRIMARY KEY (id)
+    UNIQUE INDEX unique_user_info (first_name, last_name, dob)
 );

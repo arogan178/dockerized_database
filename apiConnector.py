@@ -1,5 +1,8 @@
 import requests
+import database
+import datetime
 
+start_time = datetime.datetime.now()
 # Define API endpoint and urls
 base_url = "http://dummyapi.io/data/v1/"
 users_url = f"{base_url}/user"
@@ -29,7 +32,8 @@ for page in range(pages):
     for user in users:
         # get profile of user
         user_profile_response = requests.get(
-            f"{users_url}/{user['id']}", headers=headers)
+            f"{users_url}/{user['id']}", headers=headers
+        )
         user_profile = user_profile_response.json()
 
         # check if male
@@ -38,11 +42,23 @@ for page in range(pages):
                 "first_name": user_profile["firstName"],
                 "last_name": user_profile["lastName"],
                 "gender": user_profile["gender"],
-                "dob": user_profile["dateOfBirth"],
-                "name_char_count": len(user_profile["firstName"]) + len(user_profile["lastName"])
+                "dob": datetime.datetime.fromisoformat(
+                    user_profile["dateOfBirth"].replace(
+                        "Z", "+00:00"
+                    )  # convert from ISO format to mySQL compatible format
+                ).strftime("%Y-%m-%d %H:%M:%S"),
+                "name_char_count": len(user_profile["firstName"])
+                + len(user_profile["lastName"]),
             }
             print(
-                f"The name {user_info['first_name']} {user_info['last_name']} contains {user_info['name_char_count']} characters.")
+                f"The name {user_info['first_name']} {user_info['last_name']} contains {user_info['name_char_count']} characters."
+            )
             male_users.append(user_info)
+            database.insert_users(user_info)
 
 print(f"Males in total: {len(male_users)}")
+
+# Script execution time to identify performance issues + possible improvements
+end_time = datetime.datetime.now()
+elapsed_time = end_time - start_time
+print(f"Script execution time: {elapsed_time}")
