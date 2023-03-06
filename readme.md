@@ -40,7 +40,7 @@ docker-compose up -d
 - Log into the MySQL database
 
 ```bash
-mysql -h 127.0.0.1 -P 3306 -u root -p
+mysql -h 127.0.0.1 -P 8083 -u root -p
 ```
 
 - Password: pwd
